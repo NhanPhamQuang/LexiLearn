@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="section">
+    <h2 class="section-title">System Architecture</h2>
+
+    <div class="flow-box">
+        API Gateway
+        <br><br>
+        ↓
+        <br><br>
+        Auth Service | User Service | Quiz Service | Adaptive Engine | Gamify Service
+        <br><br>
+        ↓
+        <br><br>
+        Recommendation Engine
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Tech Stack</h2>
+
+    <ul class="feature-list">
+        <li>Backend: FastAPI / NodeJS</li>
+        <li>Database: PostgreSQL + Redis</li>
+        <li>Deployment: Docker + Nginx</li>
+        <li>CI/CD: GitHub Actions</li>
+    </ul>
+</section>
+
+{% endblock %}
