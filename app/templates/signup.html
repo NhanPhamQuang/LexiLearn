@@ -7,29 +7,32 @@
         <h2>Create Your Account</h2>
         <p>Start your adaptive learning journey</p>
 
-        <form>
+        <form method="post" action="/signup">
 
             <div class="auth-input-group">
                 <label>Full Name</label>
-                <input type="text">
+                <input type="text" name="full_name" required>
             </div>
 
             <div class="auth-input-group">
                 <label>Email</label>
-                <input type="email">
+                <input type="email" name="email" required>
             </div>
 
             <div class="auth-input-group">
                 <label>Password</label>
-                <input type="password">
+                <input type="password" name="password" required>
             </div>
 
             <div class="auth-input-group">
                 <label>Confirm Password</label>
-                <input type="password">
+                <input type="password" name="confirm_password" required>
             </div>
 
-            <button class="auth-button">Create Account</button>
+            <button type="submit" class="auth-button">
+                Create Account
+            </button>
+
         </form>
 
         <div class="auth-links" style="margin-top:20px;">

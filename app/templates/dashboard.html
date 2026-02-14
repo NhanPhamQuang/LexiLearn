@@ -1,0 +1,121 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+
+<!-- HEADER -->
+<div class="admin-header">
+    <h1>QUESTION BANK</h1>
+
+    <button class="admin-btn"
+            onclick="window.location.href='/create-question'">
+        + Create Question
+    </button>
+</div>
+
+
+<!-- STATS -->
+<div class="admin-stats">
+    Total: 8,432 |
+    LIVE: 7,980 |
+    DRAFT: 352 |
+    ARCHIVED: 100
+</div>
+
+<hr class="admin-divider">
+
+<!-- FILTERS -->
+<div class="admin-filters">
+    <input type="text" placeholder="Search...">
+
+    <select>
+        <option>Status: All</option>
+    </select>
+
+    <select>
+        <option>Difficulty: 0.0–1.0</option>
+    </select>
+
+    <select>
+        <option>Tag: IELTS</option>
+    </select>
+
+    <select>
+        <option>Sort: Newest</option>
+    </select>
+</div>
+
+<hr class="admin-divider">
+
+<!-- BULK ACTION -->
+<div class="admin-bulk">
+    <label>
+        <input type="checkbox"> Select All
+    </label>
+
+    <select>
+        <option>Bulk Action: Publish</option>
+    </select>
+</div>
+
+<hr class="admin-divider">
+
+<!-- QUESTION LIST -->
+
+<div class="question-row">
+    <input type="checkbox">
+    <div class="admin-card full-width">
+        <div class="card-top">
+            <div>
+                <span class="badge badge-live">LIVE</span>
+                <strong>Q1023</strong>
+            </div>
+            <div class="card-right">
+                Diff: 0.72 ⋮
+            </div>
+        </div>
+        <p>The word "abundant" most nearly means...</p>
+        <div class="question-meta">
+            Tags: IELTS • Advanced |
+            Attempts: 4,182 |
+            Correct Rate: 62%
+        </div>
+    </div>
+</div>
+
+<div class="question-row">
+    <input type="checkbox">
+    <div class="admin-card full-width">
+        <div class="card-top">
+            <div>
+                <span class="badge badge-draft">DRAFT</span>
+                <strong>Q1044</strong>
+            </div>
+            <div class="card-right">
+                Diff: 0.58 ⋮
+            </div>
+        </div>
+        <p>Choose the synonym of "mitigate"...</p>
+        <div class="question-meta">
+            Tags: TOEIC • Intermediate |
+            Attempts: 0
+        </div>
+    </div>
+</div>
+
+<hr class="admin-divider">
+
+<!-- PAGINATION -->
+<div class="admin-pagination">
+    Showing 1–20 of 8,432
+    <div class="pages">
+        &lt; Prev
+        <span class="active-page">1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+        Next &gt;
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LexiLearn Admin - Edit Question</title>
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+
+<div class="admin-main">
+
+    <!-- HEADER -->
+    <header class="admin-header">
+        <h1>Edit Question</h1>
+        <button class="admin-btn">Back to Dashboard</button>
+    </header>
+
+    <!-- TOP INFO -->
+    <section class="admin-card">
+
+        <div class="form-row">
+            <label>Title</label>
+            <input type="text" value="Q1023 - Synonym: Abundant">
+        </div>
+
+        <div class="form-row spaced">
+            <div>
+                <label>Status</label>
+                <select>
+                    <option>DRAFT</option>
+                    <option>PUBLISHED</option>
+                </select>
+            </div>
+
+            <div>Version: <strong>v3</strong></div>
+            <div>Last Edited: <strong>2026-02-14 10:42</strong></div>
+        </div>
+
+    </section>
+
+    <!-- MAIN LAYOUT -->
+    <div class="question-layout">
+
+        <!-- LEFT -->
+        <div class="admin-card">
+
+            <h3>Question Content</h3>
+
+            <div class="form-group">
+                <label>Question Type</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="type" checked> Multiple Choice</label>
+                    <label><input type="radio" name="type"> Fill in the Blank</label>
+                    <label><input type="radio" name="type"> True / False</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Question Text</label>
+                <textarea rows="4">The word "abundant" most nearly...</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Answer Options</label>
+
+                <div class="option">
+                    <input type="radio" name="correct" checked>
+                    <input type="text" value="A. Plentiful">
+                </div>
+
+                <div class="option">
+                    <input type="radio" name="correct">
+                    <input type="text" value="B. Scarce">
+                </div>
+
+                <button class="admin-btn-outline">+ Add Option</button>
+            </div>
+
+            <div class="form-group">
+                <label>Explanation</label>
+                <textarea rows="3"></textarea>
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div class="admin-card">
+
+            <h3>Metadata</h3>
+
+            <div class="form-group">
+                <label>Difficulty</label>
+                <input type="number" step="0.01" value="0.72">
+            </div>
+
+            <div class="form-group">
+                <label>Topic</label>
+                <select>
+                    <option>Vocabulary</option>
+                </select>
+            </div>
+
+            <h3 class="mt">Analytics</h3>
+
+            <div class="analytics">
+                <p>Attempts: 4,182</p>
+                <p>Correct Rate: 62%</p>
+                <p>Difficulty Drift: +0.03</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ACTION BAR -->
+    <div class="action-bar">
+        <button class="admin-btn-secondary">Save Draft</button>
+        <button class="admin-btn-outline">Preview</button>
+        <button class="admin-btn">Publish</button>
+    </div>
+
+</div>
+
+</body>
+</html>

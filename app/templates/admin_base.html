@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LexiLearn Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="admin-topbar">
+    <div class="topbar-left">
+        <strong>LexiLearn Admin</strong>
+    </div>
+    <div class="topbar-right">
+        Admin |
+        <span>Settings</span>
+        <span>Logout</span>
+    </div>
+</div>
+
+<div class="admin-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+        <ul>
+            <li>▸ Dashboard</li>
+            <li class="active">▸ Question Bank</li>
+            <li>▸ Vocabulary Sets</li>
+            <li>▸ Users</li>
+            <li>▸ Adaptive Engine</li>
+            <li>▸ Reports</li>
+        </ul>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="admin-main">
+        {% block content %}{% endblock %}
+    </main>
+
+</div>
+
+</body>
+</html>
