@@ -7,6 +7,11 @@ from app.auth import (
     verify_password,
     create_access_token,
 )
+from fastapi import HTTPException
+
+def admin_required(user: dict):
+    if user.get("role") != "admin":
+        raise HTTPException(status_code=403, detail="Not authorized")
 
 import re
 

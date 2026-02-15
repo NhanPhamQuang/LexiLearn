@@ -5,3 +5,4 @@ client = AsyncIOMotorClient(MONGO_URL)
 db = client.lexilearn
 
 user_collection = db.users
+question_collection = db.questions

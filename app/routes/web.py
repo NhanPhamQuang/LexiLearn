@@ -67,9 +67,7 @@ async def result(request: Request, user=Depends(get_current_user)):
 # ADMIN PAGES (admin only)
 # =========================
 
-def admin_required(user: dict):
-    if user.get("role") != "admin":
-        raise HTTPException(status_code=403, detail="Not authorized")
+from app.routes.auth import admin_required
 
 
 @router.get("/dashboard", response_class=HTMLResponse)

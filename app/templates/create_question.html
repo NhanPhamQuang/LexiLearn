@@ -2,8 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>LexiLearn Admin - Edit Question</title>
+    <title>LexiLearn Admin - Create Question</title>
     <link rel="stylesheet" href="/static/css/admin.css">
+    <style>
+        .option-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .hidden { display: none; }
+        .admin-btn-outline { cursor: pointer; }
+    </style>
 </head>
 <body>
 
@@ -11,8 +16,8 @@
 
     <!-- HEADER -->
     <header class="admin-header">
-        <h1>Edit Question</h1>
-        <button class="admin-btn">Back to Dashboard</button>
+        <h1>Create Question</h1>
+        <button class="admin-btn" onclick="window.location.href='/dashboard'">Back to Dashboard</button>
     </header>
 
     <!-- TOP INFO -->
@@ -20,20 +25,17 @@
 
         <div class="form-row">
             <label>Title</label>
-            <input type="text" value="Q1023 - Synonym: Abundant">
+            <input type="text" id="title" placeholder="e.g., Q1023 - Synonym: Abundant">
         </div>
 
         <div class="form-row spaced">
             <div>
                 <label>Status</label>
-                <select>
-                    <option>DRAFT</option>
-                    <option>PUBLISHED</option>
+                <select id="status">
+                    <option value="DRAFT">DRAFT</option>
+                    <option value="PUBLISHED">PUBLISHED</option>
                 </select>
             </div>
-
-            <div>Version: <strong>v3</strong></div>
-            <div>Last Edited: <strong>2026-02-14 10:42</strong></div>
         </div>
 
     </section>
@@ -49,36 +51,28 @@
             <div class="form-group">
                 <label>Question Type</label>
                 <div class="radio-group">
-                    <label><input type="radio" name="type" checked> Multiple Choice</label>
-                    <label><input type="radio" name="type"> Fill in the Blank</label>
-                    <label><input type="radio" name="type"> True / False</label>
+                    <label><input type="radio" name="question_type" value="multiple_choice" checked> Multiple Choice</label>
+                    <label><input type="radio" name="question_type" value="fill_blank"> Fill in the Blank</label>
+                    <label><input type="radio" name="question_type" value="boolean"> True / False</label>
                 </div>
             </div>
 
             <div class="form-group">
                 <label>Question Text</label>
-                <textarea rows="4">The word "abundant" most nearly...</textarea>
+                <textarea id="content" rows="4" placeholder="Enter question text..."></textarea>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="options-container">
                 <label>Answer Options</label>
-
-                <div class="option">
-                    <input type="radio" name="correct" checked>
-                    <input type="text" value="A. Plentiful">
+                <div id="options-list">
+                    <!-- Options injected by JS -->
                 </div>
-
-                <div class="option">
-                    <input type="radio" name="correct">
-                    <input type="text" value="B. Scarce">
-                </div>
-
-                <button class="admin-btn-outline">+ Add Option</button>
+                <button class="admin-btn-outline" onclick="addOption()">+ Add Option</button>
             </div>
 
             <div class="form-group">
                 <label>Explanation</label>
-                <textarea rows="3"></textarea>
+                <textarea id="explanation" rows="3" placeholder="Explain the correct answer..."></textarea>
             </div>
 
         </div>
@@ -89,23 +83,18 @@
             <h3>Metadata</h3>
 
             <div class="form-group">
-                <label>Difficulty</label>
-                <input type="number" step="0.01" value="0.72">
+                <label>Difficulty (0.0 - 1.0)</label>
+                <input type="number" id="difficulty" step="0.1" value="0.5" min="0" max="1">
             </div>
 
             <div class="form-group">
                 <label>Topic</label>
-                <select>
-                    <option>Vocabulary</option>
+                <select id="topic">
+                    <option value="Vocabulary">Vocabulary</option>
+                    <option value="Grammar">Grammar</option>
+                    <option value="Reading">Reading</option>
+                    <option value="Listening">Listening</option>
                 </select>
-            </div>
-
-            <h3 class="mt">Analytics</h3>
-
-            <div class="analytics">
-                <p>Attempts: 4,182</p>
-                <p>Correct Rate: 62%</p>
-                <p>Difficulty Drift: +0.03</p>
             </div>
 
         </div>
@@ -114,12 +103,105 @@
 
     <!-- ACTION BAR -->
     <div class="action-bar">
-        <button class="admin-btn-secondary">Save Draft</button>
-        <button class="admin-btn-outline">Preview</button>
-        <button class="admin-btn">Publish</button>
+        <button class="admin-btn" onclick="submitQuestion()">Save & Publish</button>
     </div>
 
 </div>
+
+<script>
+    let options = [
+        { text: "", correct: false },
+        { text: "", correct: false }
+    ];
+
+    function renderOptions() {
+        const list = document.getElementById('options-list');
+        list.innerHTML = '';
+        options.forEach((opt, index) => {
+            const div = document.createElement('div');
+            div.className = 'option-item';
+            div.innerHTML = `
+                <input type="radio" name="correct_option" ${opt.correct ? 'checked' : ''} onchange="setCorrect(${index})">
+                <input type="text" value="${opt.text}" oninput="updateOption(${index}, this.value)" placeholder="Option ${index + 1}">
+                <button type="button" class="admin-btn-outline" onclick="removeOption(${index})" style="padding: 2px 8px;">x</button>
+            `;
+            list.appendChild(div);
+        });
+    }
+
+    function addOption() {
+        options.push({ text: "", correct: false });
+        renderOptions();
+    }
+
+    function removeOption(index) {
+        if(options.length <= 1) return;
+        options.splice(index, 1);
+        renderOptions();
+    }
+
+    function updateOption(index, val) {
+        options[index].text = val;
+    }
+
+    function setCorrect(index) {
+        options.forEach((opt, i) => opt.correct = (i === index));
+    }
+
+    // Initial render
+    renderOptions();
+
+    async function submitQuestion() {
+        const title = document.getElementById('title').value;
+        const status = document.getElementById('status').value;
+        const type = document.querySelector('input[name="question_type"]:checked').value;
+        const content = document.getElementById('content').value;
+        const explanation = document.getElementById('explanation').value;
+        const difficulty = parseFloat(document.getElementById('difficulty').value);
+        const topic = document.getElementById('topic').value;
+
+        // Build options list and find correct answer
+        const optionTexts = options.map(o => o.text).filter(t => t.trim() !== "");
+        const correctOpt = options.find(o => o.correct);
+        const correctAnswer = correctOpt ? correctOpt.text : "";
+
+        if (!title || !content || !correctAnswer) {
+            alert("Please fill in Title, Content, and select a Correct Answer.");
+            return;
+        }
+
+        const payload = {
+            title,
+            question_type: type,
+            content,
+            options: optionTexts,
+            correct_answer: correctAnswer,
+            explanation,
+            difficulty,
+            topic,
+            status
+        };
+
+        try {
+            const res = await fetch('/questions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                alert('Question created successfully!');
+                window.location.reload(); 
+            } else {
+                const err = await res.json();
+                alert('Error: ' + (err.detail || 'Unknown error'));
+            }
+        } catch (e) {
+            console.error(e);
+            alert('Network error');
+        }
+    }
+</script>
 
 </body>
 </html>
